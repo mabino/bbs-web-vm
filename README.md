@@ -8,9 +8,9 @@ The directions assume a number of prerequisite skills, capabilities, and availab
 
 The architectural design and software selection prioritize simplicity of deployment and automation of updates, while the BBS customization prioritizes the availablity of Door games and basic bulletin board functionality and presentation.  The principles of this project:
 
-* Run an early 90s era BBS softare and host via a residential ISP
+* Run an early 90s era BBS software and host it via a residential ISP
 * Eliminate speciality hardware and software requirements for visitors to the extent possible
-* Provide games and BBS artwork and menuing
+* Provide games, BBS artwork, and menuing
 * Create a sustainable and secure backend with a modern-ish stack
 
 ## Web Server Virtual Machine (web.vm)
