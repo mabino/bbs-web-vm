@@ -13,8 +13,24 @@ The architectural design and software selection prioritize simplicity of deploym
 * Provide games, BBS artwork, and menuing
 * Create a sustainable and secure backend with a modern-ish stack
 
-## Web Server Virtual Machine (web.vm)
+## Web Server and Bulletin Board Virtual Machine Shared Steps
+
+```
+network:
+  ethernets:
+    eth0:
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 50
+    eth1:
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 100
+  version: 2
+  ```
+
+## Web Server Virtual Machine (web.vm) Specific Steps
 
 
 
-## Bulletin Board System Virtual Machine (bbs.vm)
+## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
