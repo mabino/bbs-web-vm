@@ -34,3 +34,5 @@ network:
 
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
+
+## Supplemental TradeWars Game Server
