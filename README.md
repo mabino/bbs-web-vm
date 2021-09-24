@@ -58,7 +58,7 @@ Requires=display-manager.service
 After=display-manager.service
 
 [Service]
-ExecStart=x11vnc -create -env FD_PROG=/usr/bin/fluxbox -env DISPLAY=:0 -env X11VNC_CREATE_GEOM=1024x768x16 -bg -rfbauth /etc/x11vnc.pass -forever
+ExecStart=x11vnc -create -env FD_PROG=/usr/bin/fluxbox -env DISPLAY=:1 -env X11VNC_CREATE_GEOM=1024x768x16 -bg -rfbauth /etc/x11vnc.pass -forever
 ExecStop=/usr/bin/killall x11vnc
 Restart=on-failure
 Restart-sec=2
