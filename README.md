@@ -36,3 +36,33 @@ network:
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
 
 ## Supplemental TradeWars Game Server
+
+1. Install `x11vnc`, `xvfb`, and `fluxbox`.
+
+```
+sudo apt-get install x11vnc xvfb fluxbox
+```
+
+2. Set an x11vnc password.
+
+```
+sudo x11vnc -storepasswd yourVNCpasswordHERE /etc/x11vnc.pass
+```
+
+1. Create a startup script for `x11vnc` at `/etc/systemd/system/x11vnc.service`.
+
+```
+[Unit]
+Description="x11vnc"
+Requires=display-manager.service
+After=display-manager.service
+
+[Service]
+ExecStart=x11vnc -create -env FD_PROG=/usr/bin/fluxbox -env DISPLAY=:0 -env X11VNC_CREATE_GEOM=1024x768x16 -bg -rfbauth /etc/x11vnc.pass -forever
+ExecStop=/usr/bin/killall x11vnc
+Restart=on-failure
+Restart-sec=2
+
+[Install]
+WantedBy=multi-user.target
+```
