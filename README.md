@@ -13,7 +13,9 @@ The architectural design and software selection prioritize simplicity of deploym
 * Provide games, BBS artwork, and menuing
 * Create a sustainable and secure backend with a modern-ish stack
 
-## Web Server and Bulletin Board Virtual Machine Shared Steps
+## Web Server and Bulletin Board System (BBS) Virtual Machine Shared Steps
+
+1. Configure both the Web Server and the BBS virtual machines to prioritze the correct routing for your setup.  For instance, in this example configuration of the file `/etc/netplan/00-installer-config.yaml`, both network devices receive routing information via DHCP.  However, because `eth0` is the public-facing device designed to serve most of the incoming web and WebSockets requests, it is important that packets get routed back to that connection first.  Routing to the internal network first may result in timeouts, particularly on a residentially-hosted connection.
 
 ```
 network:
@@ -31,7 +33,31 @@ network:
 
 ## Web Server Virtual Machine (web.vm) Specific Steps
 
+### GoDNS
 
+If hosted via a dynamically assigned IP address that you wish to map to a domain name, download and compile [GoDNS](https://github.com/TimothyYe/godns) and move the binary into `/usr/local/bin`.  Move [configs/godns.conf](configs/godns.json) into `/usr/local/etc` and use [godns.service](https://github.com/TimothyYe/godns/blob/master/systemd/godns.service) in `/etc/systemd/system` for GoDNS service startup.  This service can exist on the web server or any other server that reports outbound traffic via the public IP.
+
+`systemctl enable godns.service ; systemctl start godns.service`
+
+The GoDNS service works with multiple, well-known domain name registrars.
+
+```
+{
+  "provider": "Dreamhost",
+  "login_token": "<your token>",
+  "domains": [{
+      "domain_name": "<your domain>",
+      "sub_domains": ["@", "<sub domain 1>", "<sub domain 2>"]
+    }
+  ],
+  "resolver": "8.8.8.8",
+  "ip_url": "https://myip.biturl.top",
+  "ip_type": "IPv4",
+  "interval": 300,
+  "resolver": "ns1.dreamhost.com",
+  "socks5_proxy": ""
+}
+```
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
 
