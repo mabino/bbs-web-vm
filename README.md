@@ -37,6 +37,12 @@ network:
 
 ## Supplemental TradeWars Game Server
 
+1. Create a user that will run the graphical desktop environment for the Trade Wars Game Server.
+
+```
+sudo useradd --disabled-password twgs
+```
+
 1. Install `x11vnc`, `xvfb`, and `fluxbox`.
 
 ```
