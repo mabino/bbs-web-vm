@@ -39,7 +39,7 @@ If hosted via a dynamically assigned IP address that you wish to map to a domain
 
 `systemctl enable godns.service ; systemctl start godns.service`
 
-The GoDNS service works with multiple, well-known domain name registrars.
+The GoDNS service works with multiple, well-known domain name registrars.  In this example `/usr/local/etc/godns.json` file, the registrar is Dreamhost and authentication is via an API login token obtained from the account.  The arrays with keys `domain_name` and `sub_domains` catch all CNAME entries via `@`, so enumerating the individual sub-domains is unnecessary provided they all point to the same address.
 
 ```
 {
