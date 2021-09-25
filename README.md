@@ -40,22 +40,22 @@ network:
 1. Create a user that will run the graphical desktop environment for the Trade Wars Game Server.
 
 ```
-sudo useradd --disabled-password twgs
+sudo adduser --disabled-password twgs
 ```
 
-1. Install `x11vnc`, `xvfb`, and `fluxbox`.
+2. Install `x11vnc`, `xvfb`, and `fluxbox`.
 
 ```
 sudo apt-get install x11vnc xvfb fluxbox
 ```
 
-2. Set an x11vnc password.
+3. Set an x11vnc password.
 
 ```
 sudo x11vnc -storepasswd yourVNCpasswordHERE /etc/x11vnc.pass
 ```
 
-1. Create a startup script for `x11vnc` at `/etc/systemd/system/x11vnc.service`.
+4. Create a startup script for `x11vnc` at `/etc/systemd/system/x11vnc.service`.
 
 ```
 [Unit]
