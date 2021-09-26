@@ -117,3 +117,24 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
+6. Create a startup script for the Trade Wars Game Server software at `/etc/systemd/system/twgs.service`.
+
+```
+[Unit]
+Description="twgs"
+Requires=x11vnc.service
+After=x11vnc.servic
+
+[Service]
+User=twgs
+Group=twgs
+Type=simple
+Environment="DISPLAY=:20"
+ExecStart=/usr/bin/wine '/home/twgs/.wine/drive_c/Program Files (x86)/EIS/TWGS/twgs.exe'
+ExecStop=/usr/bin/killall wine
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
