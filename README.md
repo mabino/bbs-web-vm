@@ -104,15 +104,15 @@ WantedBy=multi-user.target
 
 ```
 [Unit]
-Description="x11vnc"
-Requires=display-manager.service
-After=display-manager.service
+Description="x11vnc as twgs"
+Requires=xinit.service
+After=xinit.servic
 
 [Service]
-ExecStart=x11vnc -create -env FD_PROG=/usr/bin/fluxbox -env DISPLAY=:1 -env X11VNC_CREATE_GEOM=1024x768x16 -bg -rfbauth /etc/x11vnc.pass -forever
+Type=simple
+ExecStart=/usr/bin/x11vnc -env DISPLAY=:20 -rfbauth /home/twgs/x11vnc.pass -forever
 ExecStop=/usr/bin/killall x11vnc
 Restart=on-failure
-Restart-sec=2
 
 [Install]
 WantedBy=multi-user.target
