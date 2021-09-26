@@ -61,6 +61,10 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
 
+1. Expose Nested Virtualization Extensions.
+
+`Set-VMProcessor <VMName> -ExposeVirtualizationExtensions $true`
+
 ## Supplemental TradeWars Game Server
 
 1. Create a user that will run the graphical desktop environment for the Trade Wars Game Server.
