@@ -61,11 +61,7 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
 
-1. Expose the Nested Virtualization Extensions for Hyper-V.
-
-`Set-VMProcessor <VMName> -ExposeVirtualizationExtensions $true`
-
-2. Install dosemu, add `/usr/lib/dosemu` to `/etc/ld.so.conf.d/libc.conf`, and run `sudo ldconfig`.
+…dosemu…
 
 ## Supplemental TradeWars Game Server
 
