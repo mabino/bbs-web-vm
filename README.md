@@ -75,13 +75,32 @@ sudo adduser --disabled-password twgs
 sudo apt-get install x11vnc xvfb fluxbox
 ```
 
-3. Set an x11vnc password.
+3. Set an x11vnc password for use by the `twgs` user.
 
 ```
-sudo x11vnc -storepasswd yourVNCpasswordHERE /etc/x11vnc.pass
+sudo su - twgs
+x11vnc -storepasswd yourVNCpasswordHERE /home/twgs/x11vnc.pass
 ```
 
-4. Create a startup script for `x11vnc` at `/etc/systemd/system/x11vnc.service`.
+4. Create a startup script for `xinit` and `fluxbox` at `/etc/systemd/system/xinit.service`.
+
+```
+[Unit]
+Description="xinit as twgs"
+
+[Service]
+User=twgs
+Group=twgs
+Type=simple
+ExecStart=/usr/bin/xinit /usr/bin/fluxbox -- /usr/bin/Xvfb :20 -nolisten tcp
+ExecStop=/usr/bin/killall xinit
+#Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+5. Create a startup script for `x11vnc` at `/etc/systemd/system/x11vnc.service`.
 
 ```
 [Unit]
