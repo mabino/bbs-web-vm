@@ -61,7 +61,11 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
 
-…dosemu…
+1. Configure `ufw`.
+
+sudo ufw allow in on eth1 to any port 5900 proto tcp from 192.168.7.0/24
+
+2. Install [DOSEmu](https://launchpad.net/ubuntu/focal/amd64/dosemu/1.4.0.7+20130105+b028d3f-2build1)
 
 ## Supplemental TradeWars Game Server
 
