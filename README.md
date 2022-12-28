@@ -59,11 +59,40 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 }
 ```
 
-Create a user and startup script that maintains a tunnel for the BBS.
+### Websockify and Web-accessible Telnet
+
+Use websockify to enable connections to a tunneled telnet connection.  Install websockify (`apt install websockify`), then configure a system script that maintains the port and encrypts the communication utilizing the web server's SSL certificate.
 
 ```
-/usr/lib/autossh/autossh -M 0 -o ServerAliveInterval 30 -o ServerAliveCountMax 3 -i /home/synchro/.ssh/bbs_tunnel -NL 2323:localhost:2323 bbs.vm
-/usr/bin/ssh -o ServerAliveInterval 30 -o ServerAliveCountMax 3 -i /home/synchro/.ssh/bbs_tunnel -NL 2323:localhost:2323 bbs.vm
+[Unit]
+        Description=Websockify
+        After=syslog.target network.target
+
+[Service]
+        User=root
+        Group=root
+        ExecStart=/usr/bin/websockify --cert /etc/letsencrypt/live/bino.io/fullchain.pem --key /etc/letsencrypt/live/bino.io/privkey.pem --ssl-only :9999 localhost:2323 --log-file /var/log/websockify.log
+        ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+        WantedBy=multi-user.target
+```
+
+Create a user and a systemd script that maintains a tunnel for the BBS.
+
+```
+[Unit]
+Description=AutoSSH tunnel service for BBS
+After=network.target
+
+[Service]
+User=synchro
+Group=synchro
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -i /home/synchro/.ssh/bbs_tunnel -NL 2323:localhost:2323 bbs.vm
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ## Bulletin Board System Virtual Machine (bbs.vm) Specific Steps
