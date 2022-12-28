@@ -72,7 +72,30 @@ Create a user and startup script that maintains a tunnel for the BBS.
 
 sudo ufw allow in on eth1 to any port 5900 proto tcp from 192.168.7.0/24
 
-2. Install [DOSEmu](https://launchpad.net/ubuntu/focal/amd64/dosemu/1.4.0.7+20130105+b028d3f-2build1)
+2. Install [DOSEmu](https://launchpad.net/ubuntu/focal/amd64/dosemu/1.4.0.7+20130105+b028d3f-2build1)  Configure it for DOORS games (needs elaboration).
+
+3. Create a startup script for the SBBS service.
+
+```
+[Unit]
+        Description=Synchronet BBS
+        Documentation=man:sbbs
+        After=syslog.target network.target
+
+[Service]
+        Type=forking
+        Environment=SBBSROOT=/home/synchro/sbbs SBBSCTRL=/home/synchro/sbbs/ctrl
+        User=synchro
+        Group=synchro
+        PermissionsStartOnly=true
+        ExecStart=/home/synchro/sbbs/exec/sbbs d
+        ExecReload=/bin/kill -HUP $MAINPID
+        Restart=on-failure
+        RestartSec=30
+
+[Install]
+        WantedBy=multi-user.target
+```
 
 ## Supplemental TradeWars Game Server
 
