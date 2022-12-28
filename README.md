@@ -62,6 +62,7 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 Create a user and startup script that maintains a tunnel for the BBS.
 
 ```
+/usr/lib/autossh/autossh -M 0 -o ServerAliveInterval 30 -o ServerAliveCountMax 3 -i /home/synchro/.ssh/bbs_tunnel -NL 2323:localhost:2323 bbs.vm
 /usr/bin/ssh -o ServerAliveInterval 30 -o ServerAliveCountMax 3 -i /home/synchro/.ssh/bbs_tunnel -NL 2323:localhost:2323 bbs.vm
 ```
 
