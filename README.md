@@ -59,6 +59,35 @@ The GoDNS service works with multiple, well-known domain name registrars.  In th
 }
 ```
 
+### Redirect Websocket Requests
+
+Redirect websocket requests using a rewrite directive in the virtualhost configuration.
+
+```
+<VirtualHost _default_:443>
+
+        ServerName <subdomain>.<domain>
+        DocumentRoot /var/www/html/<subdomain>.<domain>
+
+        SSLProxyEngine On
+        ProxyPreserveHost On
+        ProxyRequests Off
+
+        ErrorLog ${APACHE_LOG_DIR}/error.bbs.log
+        CustomLog ${APACHE_LOG_DIR}/access.bbs.log combined
+
+        Include /etc/letsencrypt/options-ssl-apache.conf
+        SSLCertificateFile /etc/letsencrypt/live/<domain>/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/<domain>/privkey.pem
+
+        RewriteEngine On
+        RewriteCond %{HTTP:Upgrade} websocket [NC]
+        RewriteCond %{HTTP:Connection} upgrade [NC]
+        RewriteRule ^/?(.*) "wss://127.0.0.1:9999/$1" [P,L]
+
+</VirtualHost>
+```
+
 ### Websockify and Web-accessible Telnet
 
 Use websockify to enable connections to a tunneled telnet connection.  Install websockify (`apt install websockify`), then configure a system script that maintains the port and encrypts the communication utilizing the web server's SSL certificate.
